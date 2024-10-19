@@ -1,6 +1,6 @@
 import { smallserial, pgTable, varchar, boolean } from "drizzle-orm/pg-core";
 
-export const user = pgTable("user", {
+export const user = pgTable("users", {
   id: smallserial("id").primaryKey(),
   username: varchar("username", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
