@@ -1,5 +1,5 @@
 {
-  "id": "ed6b7a34-8dfb-4b1d-97fd-af7c591eca4d",
+  "id": "aafc3565-d75f-436e-8c04-dd6653ec7f35",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,7 +10,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "smallserial",
           "primaryKey": true,
           "notNull": true
         },
@@ -25,6 +25,13 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
+        },
+        "is_admin": {
+          "name": "is_admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
         }
       },
       "indexes": {},
