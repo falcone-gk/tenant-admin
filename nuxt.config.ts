@@ -2,6 +2,16 @@
 export default defineNuxtConfig({
   extends: ["falconex-starter"],
   modules: ["@nuxt/eslint"],
+  $development: {
+    runtimeConfig: {
+      isDev: true,
+    },
+  },
+  $production: {
+    runtimeConfig: {
+      isDev: false,
+    },
+  },
   devtools: { enabled: true },
   colorMode: {
     preference: "light",
@@ -9,6 +19,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     drizzle: {
       database_url: process.env.DATABASE_URL,
+    },
+    basicAuth: {
+      saltRounds: process.env.SALT_ROUNDS,
     },
   },
   future: {

@@ -4,6 +4,12 @@ export default defineTask({
     description: "Run create user in db",
   },
   async run({ payload, context }) {
+    const isDev = useRuntimeConfig().isDev;
+    if (!isDev) {
+      console.log("Skipping user creation task in prod mode");
+      return { result: "Skipped" };
+    }
+
     console.log("Running user creation task...");
     const { username, password } = payload;
     const hashedPassword = await hashPassword(password as string);
