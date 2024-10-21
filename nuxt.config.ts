@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     },
     basicAuth: {
       saltRounds: process.env.SALT_ROUNDS,
+      secretKey: process.env.SECRET_KEY,
     },
   },
   future: {
