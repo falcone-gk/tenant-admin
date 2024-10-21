@@ -1,29 +1,20 @@
 <script setup lang="ts">
-import type { z } from "zod";
 import type { Form } from "#ui/types";
 
 definePageMeta({
   layout: "centered",
 });
 
-type LoginSchemaType = z.infer<typeof loginSchema>;
 const state = reactive<LoginSchemaType>({
   username: "",
   password: "",
 });
 
-const { data: session, execute } = useFetch("/api/auth/login", {
-  immediate: false,
-  watch: false,
-  method: "POST",
-  body: state,
-});
-
 const form = useTemplateRef<Form<LoginSchemaType>>("login-form");
-const { setSession } = useAuth();
+const { login, isLoggedIn } = useAuth();
 const onSubmit = async () => {
-  await execute();
-  if (!session.value) {
+  await login(state);
+  if (!isLoggedIn.value) {
     form.value?.setErrors([
       {
         message: "Wrong credentials.",
@@ -32,7 +23,6 @@ const onSubmit = async () => {
     ]);
   }
   else {
-    setSession(session.value.data);
     navigateTo("/admin");
   }
 };
