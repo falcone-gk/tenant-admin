@@ -42,4 +42,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  tailwindcss: {
+    cssPath: "~/assets/global.css",
+  },
 });
