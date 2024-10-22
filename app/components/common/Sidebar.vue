@@ -11,7 +11,8 @@
 // ];
 
 const publicLinks = [
-  { label: "Home", icon: "i-heroicons-home-solid", to: "/admin" },
+  { label: "Home", icon: "i-heroicons-home-solid", to: "/admin", exact: true },
+  { label: "Tenant", icon: "i-heroicons-user-group", to: "/admin/tenant" },
 ];
 
 const links = [publicLinks];

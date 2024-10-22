@@ -25,6 +25,11 @@ export default defineNuxtConfig({
       secretKey: process.env.SECRET_KEY,
     },
   },
+  routeRules: {
+    "/admin": {
+      redirect: "/admin/tenant",
+    },
+  },
   future: {
     compatibilityVersion: 4,
   },
