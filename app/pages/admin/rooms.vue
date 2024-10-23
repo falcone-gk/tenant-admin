@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
-  title: "Inquilinos",
-  name: "tenants",
+  title: "Cuartos",
+  name: "rooms",
 });
 </script>
 

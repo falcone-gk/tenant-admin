@@ -26,7 +26,7 @@ export const defineAdminResponseHandler = <T extends EventHandlerRequest, D, E> 
       if (!schema) {
         const response = await handler(event);
         // do something after the route handler
-        return { response };
+        return response;
       }
 
       const body = await readValidatedBody(event, schema.safeParse);
@@ -38,10 +38,11 @@ export const defineAdminResponseHandler = <T extends EventHandlerRequest, D, E> 
           data: body.error.issues,
         });
       }
-      event.context.body = body;
+      event.context.body = body.data;
 
+      const response = await handler(event);
       // do something after the route handler
-      return await handler(event);
+      return response;
     }
     catch (err) {
       // Error handling

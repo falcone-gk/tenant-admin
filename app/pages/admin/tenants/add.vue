@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { z } from "zod";
 import type { Form } from "#ui/types";
 
-type FormTenant = z.infer<typeof tenantSchema>;
 const form = useTemplateRef<Form<FormTenant>>("tenant-form");
 
 const initialValues = {

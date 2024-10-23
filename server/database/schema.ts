@@ -10,6 +10,7 @@ import {
   date,
   pgEnum,
 } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 
 export const registerEnum = pgEnum("register_enum", ["fixed", "variable"]);
 export const unitEnum = pgEnum("unit_enum", ["m3", "kw"]);
@@ -37,6 +38,10 @@ export const tenant = pgTable("tenants", {
   isDeleted: boolean("is_deleted").notNull().default(false),
 });
 
+export const tenantRelations = relations(tenant, ({ many }) => ({
+  rooms: many(room),
+}));
+
 export const room = pgTable("rooms", {
   id: smallserial("id").primaryKey(),
   code: varchar("code", { length: 20 }).notNull().unique(),
@@ -51,6 +56,13 @@ export const room = pgTable("rooms", {
   hasInternet: boolean("has_internet").notNull().default(false),
   internetCost: integer("internet_cost").notNull().default(0),
 });
+
+export const roomRelations = relations(room, ({ one }) => ({
+  tenants: one(tenant, {
+    fields: [room.tenantId],
+    references: [tenant.id],
+  }),
+}));
 
 export const service = pgTable("services", {
   id: smallserial("id").primaryKey(),

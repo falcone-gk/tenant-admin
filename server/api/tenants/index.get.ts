@@ -1,4 +1,13 @@
 export default defineAuthenticatedResponseHandler(async (event) => {
   const db = useDrizzle();
-  return db.select().from(tables.tenant);
+  const tenants = await db.query.tenant.findMany({
+    with: {
+      rooms: {
+        columns: {
+          code: true,
+        },
+      },
+    },
+  });
+  return tenants;
 });
