@@ -25,9 +25,3 @@ export const roomSchema = z.object({
   hasInternet: z.boolean().default(false),
   internetCost: z.number().min(0),
 });
-
-export const serviceSchema = z.object({
-  name: z.string().min(1).max(255),
-  unit: z.string().min(1).max(10),
-  unitPrice: z.number().min(1).max(100),
-});

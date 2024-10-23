@@ -14,6 +14,7 @@ const publicLinks = [
   { label: "Home", icon: "i-heroicons-home-solid", to: "/admin", exact: true },
   { label: "Inquilinos", icon: "i-heroicons-user-group-solid", to: "/admin/tenants" },
   { label: "Cuartos", icon: "i-heroicons-building-office-solid", to: "/admin/rooms" },
+  { label: "Configuración", icon: "i-heroicons-cog-6-tooth-20-solid", to: "/admin/config" },
 ];
 
 const links = [publicLinks];

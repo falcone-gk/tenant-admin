@@ -48,6 +48,6 @@ export default defineNuxtConfig({
     },
   },
   tailwindcss: {
-    cssPath: "~/assets/global.css",
+    cssPath: "~/assets/css/global.css",
   },
 });

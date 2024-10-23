@@ -21,15 +21,17 @@ const backLink = computed(() => {
             {{ title }}
           </Typography>
 
-          <div v-if="currentRouteNameStructure.includes('admin') && !currentRouteNameStructure.includes('add')">
-            <UButton icon="i-heroicons-plus-circle-20-solid" :to="`${route.path}/add`">
-              Agregar {{ title }}
-            </UButton>
-          </div>
-          <div v-else>
-            <UButton icon="i-heroicons-arrow-long-left-20-solid" :to="backLink">
-              Regresar
-            </UButton>
+          <div v-if="route.name != 'config'">
+            <div v-if="currentRouteNameStructure.includes('admin') && !currentRouteNameStructure.includes('add')">
+              <UButton icon="i-heroicons-plus-circle-20-solid" :to="`${route.path}/add`">
+                Agregar {{ title }}
+              </UButton>
+            </div>
+            <div v-else>
+              <UButton icon="i-heroicons-arrow-long-left-20-solid" :to="backLink">
+                Regresar
+              </UButton>
+            </div>
           </div>
         </div>
         <div

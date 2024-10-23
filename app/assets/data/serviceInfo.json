@@ -1,0 +1,12 @@
+{
+  "electricity": {
+    "name": "Luz",
+    "unit": "kw",
+    "unitPrice": 0.85
+  },
+  "water": {
+    "name": "Agua",
+    "unit": "m3",
+    "unitPrice": 3.7
+  }
+}
