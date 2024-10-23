@@ -7,3 +7,8 @@ export interface UserSession {
 }
 
 export type LoginSchemaType = z.infer<typeof loginSchema>;
+export type FormTenant = z.infer<typeof tenantSchema>;
+
+export interface Tenant extends FormTenant {
+  id: number;
+}

@@ -15,6 +15,20 @@
       "when": 1729377291764,
       "tag": "0001_strong_tag",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729606325808,
+      "tag": "0002_thick_mockingbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1729620714420,
+      "tag": "0003_even_victor_mancha",
+      "breakpoints": true
     }
   ]
 }

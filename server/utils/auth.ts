@@ -23,7 +23,7 @@ export const createUserSession = async (event: H3Event, data: UserSession) => {
     cookie: {
       httpOnly: true,
       sameSite: "strict",
-      maxAge: 60,
+      maxAge: 60 * 60 * 24, // One day,
     },
   });
 
@@ -32,16 +32,48 @@ export const createUserSession = async (event: H3Event, data: UserSession) => {
 };
 
 export const getUserSession = async (event: H3Event) => {
-  const session = await useSession<UserSession>(event, { name: "user", password: secretKey });
+  const session = await useSession<UserSession>(event, {
+    name: "user",
+    password: secretKey,
+    cookie: {
+      sameSite: "strict",
+    },
+  });
   if (Object.keys(session.data).length === 0) {
     return null;
   }
   return session;
 };
 
+export const requireUserSession = async (event: H3Event) => {
+  const session = await getUserSession(event);
+  if (!session) {
+    throw createError({
+      status: 401,
+      statusMessage: "Invalid credentials",
+    });
+  }
+};
+
+export const requireAdminSession = async (event: H3Event) => {
+  const session = await getUserSession(event);
+  if (!session) {
+    throw createError({
+      status: 401,
+      statusMessage: "Invalid credentials",
+    });
+  }
+  else if (!session.data.isAdmin) {
+    throw createError({
+      status: 403,
+      statusMessage: "Unauthorized",
+    });
+  }
+};
+
 export const deleteUserSession = async (event: H3Event) => {
   const session = await getUserSession(event);
   if (session) {
-    session.clear();
+    await session.clear();
   }
 };
