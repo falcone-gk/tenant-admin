@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     "/admin": {
-      redirect: "/admin/tenant",
+      redirect: "/admin/tenants",
     },
   },
   future: {
