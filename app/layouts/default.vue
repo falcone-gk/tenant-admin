@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const title = useState("title");
 const route = useRoute();
-const currentRouteNameStructure = computed(() => {
-  return route.path.split("/");
+const isAdminSection = computed(() => {
+  const regex = /^\/admin\/[a-zA-Z0-9]+$/;
+  return regex.test(route.path);
 });
 const backLink = computed(() => {
-  return route.path.replace("/add", "");
+  return route.path.replace(/\/(add|\d+)$/, "");
 });
 </script>
 
@@ -22,7 +23,7 @@ const backLink = computed(() => {
           </Typography>
 
           <div v-if="route.name != 'config'">
-            <div v-if="currentRouteNameStructure.includes('admin') && !currentRouteNameStructure.includes('add')">
+            <div v-if="isAdminSection">
               <UButton icon="i-heroicons-plus-circle-20-solid" :to="`${route.path}/add`">
                 Agregar {{ title }}
               </UButton>

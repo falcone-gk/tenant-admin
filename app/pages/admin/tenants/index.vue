@@ -1,4 +1,8 @@
 <script setup lang="ts">
+interface Room {
+  code: string;
+}
+
 const { data, status } = useAPI<TableTenant[]>(() => "/api/tenants", { lazy: true });
 const loading = computed(() => status.value === "pending");
 
@@ -8,6 +12,7 @@ const columns = [
   { key: "name", label: "Nombre" },
   { key: "paymentDay", label: "Día de pago" },
   { key: "rooms", label: "Cuartos" },
+  { key: "actions", label: "Acciones" },
 ];
 </script>
 
@@ -26,7 +31,17 @@ const columns = [
       :columns="columns"
     >
       <template #rooms-data="{ row }">
-        {{ row.rooms.map(room => room.code).join(",") }}
+        {{ row.rooms.map((room: Room) => room.code).join(",") }}
+      </template>
+      <template #actions-data="{ row }">
+        <UTooltip text="Edit post">
+          <UButton
+            size="xs"
+            icon="i-heroicons-pencil-solid"
+            color="gray"
+            :to="`/admin/tenants/${row.id}`"
+          />
+        </UTooltip>
       </template>
     </UTable>
   </div>

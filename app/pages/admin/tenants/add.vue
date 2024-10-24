@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import type { Form } from "#ui/types";
-
-const form = useTemplateRef<Form<FormTenant>>("tenant-form");
-
 const initialValues = {
   name: "",
   paymentDay: 1,
@@ -16,11 +12,10 @@ const { data, status, execute: createTenant } = await useAPI("/api/tenants", {
   method: "POST",
   body: state,
 });
-
-const pending = computed(() => status.value === "pending");
+const loading = computed(() => status.value === "pending");
 
 const { showNotification } = useNotification();
-const onSubmit = async () => {
+const onCreateTenant = async () => {
   await createTenant();
   if (!data.value) {
     showNotification({
@@ -33,6 +28,7 @@ const onSubmit = async () => {
       type: "success",
       message: "Tenant created successfully",
     });
+    // TODO: For some readon the 'initalValues' is updated with state.
     state.value = initialValues;
   }
 };
@@ -40,27 +36,6 @@ const onSubmit = async () => {
 
 <template>
   <div class="p-4">
-    <UForm
-      ref="tenant-form"
-      class="flex flex-col gap-4 max-w-xl"
-      :state="state"
-      :schema="tenantSchema"
-    >
-      <UFormGroup label="Nombre" name="name">
-        <UInput v-model="state.name" placeholder="Enter name" />
-      </UFormGroup>
-      <UFormGroup label="Día de pago" name="paymentDay">
-        <UInput
-          v-model="state.paymentDay"
-          placeholder="Enter payment day"
-          type="number"
-          :min="1"
-          :max="31"
-        />
-      </UFormGroup>
-      <div>
-        <UButton label="Submit" :loading="pending" @click="onSubmit" />
-      </div>
-    </UForm>
+    <FormTenant v-model:form="state" :is-loading="loading" @send-form="onCreateTenant" />
   </div>
 </template>

@@ -4,7 +4,7 @@ import type { FormTenant } from "~/utils/types";
 export default defineAdminResponseHandler(async (event) => {
   const db = useDrizzle();
   const body = event.context.body as FormTenant;
-  const newTenant = await db.insert(tables.tenant).values(body);
+  const [newTenant] = await db.insert(tables.tenant).values(body).returning();
 
   return {
     status: "success",
