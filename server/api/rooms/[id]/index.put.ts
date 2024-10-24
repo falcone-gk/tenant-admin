@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { tenantSchema } from "~/utils/schemas";
-import type { FormTenant } from "~/utils/types";
+import { roomSchema } from "~/utils/schemas";
+import type { FormRoom } from "~/utils/types";
 
 export default defineAdminResponseHandler(async (event) => {
   const paramSchema = z.object({
@@ -18,16 +18,16 @@ export default defineAdminResponseHandler(async (event) => {
     });
   }
   const db = useDrizzle();
-  const body = event.context.body as FormTenant;
-  const [updatedTenant] = await db
-    .update(tables.tenant)
+  const body = event.context.body as FormRoom;
+  const [updatedRoom] = await db
+    .update(tables.room)
     .set(body)
-    .where(eq(tables.tenant.id, params.data.id))
+    .where(eq(tables.room.id, params.data.id))
     .returning();
 
   return {
     status: "success",
-    message: "Tenant updated successfully",
-    data: updatedTenant,
+    message: "Room updated successfully",
+    data: updatedRoom,
   };
-}, tenantSchema);
+}, roomSchema);

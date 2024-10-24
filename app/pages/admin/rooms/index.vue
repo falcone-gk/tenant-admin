@@ -15,6 +15,7 @@ const columns = [
   { key: "tvCost", label: "Costo de TV" },
   { key: "hasInternet", label: "Tiene Internet" },
   { key: "internetCost", label: "Costo de Internet" },
+  { key: "actions", label: "Acciones" },
 ];
 </script>
 
@@ -31,6 +32,17 @@ const columns = [
       :loading="loading"
       :rows="data"
       :columns="columns"
-    />
+    >
+      <template #actions-data="{ row }">
+        <UTooltip text="Edit post">
+          <UButton
+            size="xs"
+            icon="i-heroicons-pencil-solid"
+            color="gray"
+            :to="`/admin/rooms/${row.id}`"
+          />
+        </UTooltip>
+      </template>
+    </UTable>
   </div>
 </template>
