@@ -2,8 +2,8 @@ import type { z } from "zod";
 
 declare module "#app" {
   interface PageMeta {
-    title: string;
-    hasAddView: boolean;
+    title?: string;
+    hasAddView?: boolean;
   }
 }
 
