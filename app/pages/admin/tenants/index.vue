@@ -34,7 +34,7 @@ const columns = [
         {{ row.rooms.map((room: Room) => room.code).join(",") }}
       </template>
       <template #actions-data="{ row }">
-        <UTooltip text="Edit post">
+        <UTooltip text="Editar">
           <UButton
             size="xs"
             icon="i-heroicons-pencil-solid"

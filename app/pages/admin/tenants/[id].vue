@@ -3,7 +3,7 @@ const route = useRoute();
 const id = route.params.id;
 
 const state = ref<Tenant>();
-const { data: tenant, execute: getTenant } = await useAPI<Tenant>(`/api/tenants/${id}`, {
+await useAPI<Tenant>(`/api/tenants/${id}`, {
   onResponse: ({ response }) => {
     state.value = response._data as Tenant;
   },

@@ -4,7 +4,7 @@ const initialValues = {
   paymentDay: 1,
   isDeleted: false,
 };
-const state = ref<FormTenant>(initialValues);
+const state = ref<FormTenant>({ ...initialValues });
 
 const { data, status, execute: createTenant } = await useAPI("/api/tenants", {
   immediate: false,
@@ -28,7 +28,6 @@ const onCreateTenant = async () => {
       type: "success",
       message: "Tenant created successfully",
     });
-    // TODO: For some readon the 'initalValues' is updated with state.
     state.value = initialValues;
   }
 };

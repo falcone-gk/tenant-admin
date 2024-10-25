@@ -12,7 +12,7 @@ const initialValues: FormRoom = {
   hasInternet: false,
   internetCost: 0,
 };
-const state = ref<FormRoom>(initialValues);
+const state = ref<FormRoom>({ ...initialValues });
 
 const { data, status, execute: createRoom } = await useAPI("/api/rooms", {
   immediate: false,
