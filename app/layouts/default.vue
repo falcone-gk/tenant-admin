@@ -22,7 +22,7 @@ const backLink = computed(() => {
             {{ title }}
           </Typography>
 
-          <div v-if="route.name != 'config'">
+          <div v-if="route.meta.hasAddView">
             <div v-if="isAdminSection">
               <UButton icon="i-heroicons-plus-circle-20-solid" :to="`${route.path}/add`">
                 Agregar {{ title }}

@@ -1,19 +1,9 @@
 <script setup lang="ts">
-// const adminLinks = [
-//   {
-//     label: "Dashboard",
-//     icon: "i-heroicons-presentation-chart-bar-solid",
-//     to: "/admin",
-//     exact: true,
-//   },
-//   { label: "Posts", icon: "i-heroicons-pencil-solid", to: "/admin/posts" },
-//   { label: "Tags", icon: "i-heroicons-tag-solid", to: "/admin/tags" },
-// ];
-
 const publicLinks = [
   { label: "Home", icon: "i-heroicons-home-solid", to: "/admin", exact: true },
   { label: "Inquilinos", icon: "i-heroicons-user-group-solid", to: "/admin/tenants" },
   { label: "Cuartos", icon: "i-heroicons-building-office-solid", to: "/admin/rooms" },
+  { label: "Deudas", icon: "i-heroicons-currency-dollar-solid", to: "/admin/debts" },
   { label: "Configuración", icon: "i-heroicons-cog-6-tooth-20-solid", to: "/admin/config" },
 ];
 
@@ -29,7 +19,7 @@ const onLogout = async () => {
 <template>
   <UCard
     :ui="{
-      base: 'hidden md:flex flex-col min-w-[300px]',
+      base: 'hidden md:flex flex-col w-[var(--sidebar-width)]',
       rounded: '',
       background: 'bg-white dark:bg-gray-950',
       footer: { base: 'mt-auto' },

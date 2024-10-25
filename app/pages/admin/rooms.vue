@@ -2,6 +2,7 @@
 definePageMeta({
   title: "Cuartos",
   name: "rooms",
+  hasAddView: true,
 });
 </script>
 
