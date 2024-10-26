@@ -6,13 +6,9 @@ const props = defineProps({
   },
 });
 
-interface TenantOption {
-  id: number;
-  name: string;
-}
-
 const emit = defineEmits(["sendForm"]);
-const { data: tenantOptions } = await useAPI<TenantOption[]>("/api/tenants/list");
+const { getTenantOptions } = useTenant();
+const { data: tenantOptions } = await getTenantOptions();
 const registerOptions = ["fixed", "variable"] as const;
 const state = defineModel<Room | FormRoom>("form", { required: true });
 </script>

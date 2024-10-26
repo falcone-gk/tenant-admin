@@ -2,6 +2,7 @@
 definePageMeta({
   title: "Deudas",
   name: "debts",
+  hasAddView: true,
 });
 </script>
 

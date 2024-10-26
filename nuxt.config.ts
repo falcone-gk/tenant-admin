@@ -29,6 +29,9 @@ export default defineNuxtConfig({
     "/admin": {
       redirect: "/admin/tenants",
     },
+    "/admin/**": {
+      ssr: false,
+    },
   },
   future: {
     compatibilityVersion: 4,
