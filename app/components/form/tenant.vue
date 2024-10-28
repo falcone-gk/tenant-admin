@@ -28,6 +28,9 @@ const state = defineModel<Tenant | FormTenant>("form", { required: true });
         :max="31"
       />
     </UFormGroup>
+    <UFormGroup label="Prefijo de deuda" name="debtPrefix">
+      <UInput v-model="state.debtPrefix" />
+    </UFormGroup>
     <div>
       <UButton type="submit" label="Submit" :loading="props.isLoading" />
     </div>
