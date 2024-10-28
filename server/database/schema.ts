@@ -34,6 +34,8 @@ export const tenant = pgTable("tenants", {
   // This field is to track the total debt of the tenant = current debt + service debt
   // totalDebt: integer("total_debt").notNull().default(0),
   paymentDay: smallint("payment_day").notNull(),
+  debtPrefix: varchar("debt_prefix", { length: 2 }).unique(),
+  debtCounter: integer("debt_counter").notNull().default(0),
   // Field to track if the tenant is soft deleted or not
   isDeleted: boolean("is_deleted").notNull().default(false),
 });

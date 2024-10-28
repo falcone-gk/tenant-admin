@@ -2,6 +2,7 @@
 const initialValues = {
   name: "",
   paymentDay: 1,
+  debtPrefix: "",
   isDeleted: false,
 };
 const state = ref<FormTenant>({ ...initialValues });

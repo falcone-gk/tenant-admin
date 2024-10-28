@@ -7,6 +7,7 @@ const { data, status } = useAPI<TableTenant[]>(() => "/api/tenants", { lazy: tru
 const loading = computed(() => status.value === "pending");
 
 const selected = ref<Tenant[]>([]);
+const selectedIds = computed(() => selected.value.map(tenant => tenant.id));
 const columns = [
   { key: "id", label: "ID" },
   { key: "name", label: "Nombre" },
@@ -14,12 +15,27 @@ const columns = [
   { key: "rooms", label: "Cuartos" },
   { key: "actions", label: "Acciones" },
 ];
+
+const { status: deleteStatus, execute: deleteTenants } = useAPI("/api/tenants/delete", {
+  immediate: false,
+  watch: false,
+  method: "POST",
+  body: {
+    ids: selectedIds,
+  },
+});
 </script>
 
 <template>
   <div>
     <div class="flex justify-end p-2">
-      <UButton icon="i-heroicons-trash-solid" color="red" :disabled="selected.length === 0">
+      <UButton
+        icon="i-heroicons-trash-solid"
+        color="red"
+        :disabled="selected.length === 0"
+        :loading="deleteStatus === 'pending'"
+        @click="deleteTenants"
+      >
         Eliminar
       </UButton>
     </div>
