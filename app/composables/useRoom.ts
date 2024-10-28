@@ -3,10 +3,10 @@ import type { UseFetchOptions } from "nuxt/app";
 export function useRoom() {
   const url = "/api/rooms";
   const nuxtApp = useNuxtApp();
-  const key = "roomOptions";
+  const key = "rooms";
 
-  function getRooms<T = Room[], DataT = RoomOption[]>(
-    options?: UseFetchOptions<T, DataT>,
+  function getRooms<T = Room[]>(
+    options?: UseFetchOptions<T>,
   ) {
     return useAPI(url, {
       ...options,
@@ -14,23 +14,18 @@ export function useRoom() {
       getCachedData: () => {
         return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
       },
-      $fetch: useNuxtApp().$api,
     });
   }
 
-  function getRoomOptions() {
-    return getRooms({
-      transform: (data: Room[]) => {
-        const tenantOpts = data.map((item) => {
-          return {
-            id: item.id,
-            code: item.code,
-            tenantId: item.tenantId,
-          };
-        });
-        return tenantOpts;
-      },
-      $fetch: useNuxtApp().$api,
+  async function getRoomOptions() {
+    const { data: rooms } = await getRooms();
+    if (!rooms.value) return [];
+    return rooms.value.map((room) => {
+      return {
+        id: room.id,
+        code: room.code,
+        tenantId: room.tenantId,
+      };
     });
   }
 

@@ -1,8 +1,8 @@
 import type { UseFetchOptions } from "nuxt/app";
 
-export function useAPI<ResT, DataT>(
+export function useAPI<T>(
   url: string | (() => string),
-  options?: UseFetchOptions<ResT, DataT>,
+  options?: UseFetchOptions<T>,
 ) {
   return useFetch(url, {
     ...options,

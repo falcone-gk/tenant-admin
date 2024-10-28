@@ -36,7 +36,7 @@ const backLink = computed(() => {
           </div>
         </div>
         <div
-          class="flex flex-col overflow-y-scroll min-h-[calc(100vh-var(--header-height))]"
+          class="flex flex-col overflow-y-scroll h-[calc(100vh-var(--header-height))]"
         >
           <slot />
         </div>

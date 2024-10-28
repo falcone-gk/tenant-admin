@@ -3,10 +3,10 @@ import type { UseFetchOptions } from "nuxt/app";
 export function useTenant() {
   const url = "/api/tenants";
   const nuxtApp = useNuxtApp();
-  const key = "tenantOptions";
+  const key = "tenants";
 
-  function getTenants<T = Tenant[], DataT = TenantOption[]>(
-    options?: UseFetchOptions<T, DataT>,
+  function getTenants<T = Tenant[]>(
+    options?: UseFetchOptions<T>,
   ) {
     return useAPI(url, {
       ...options,
@@ -14,22 +14,17 @@ export function useTenant() {
       getCachedData: () => {
         return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
       },
-      $fetch: useNuxtApp().$api,
     });
   }
 
-  function getTenantOptions() {
-    return getTenants({
-      transform: (data: Tenant[]) => {
-        const tenantOpts = data.map((item) => {
-          return {
-            id: item.id,
-            name: item.name,
-          };
-        });
-        return tenantOpts;
-      },
-      $fetch: useNuxtApp().$api,
+  async function getTenantOptions() {
+    const { data: tenants } = await getTenants();
+    if (!tenants.value) return [];
+    return tenants.value.map((tenant) => {
+      return {
+        id: tenant.id,
+        name: tenant.name,
+      };
     });
   }
 
