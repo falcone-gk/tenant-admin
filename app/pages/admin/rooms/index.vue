@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const { data, status } = useAPI<Room[]>(() => "/api/rooms", { lazy: true });
+const { data, status } = useAPI<TableRoom[]>(() => "/api/rooms", { lazy: true });
 const loading = computed(() => status.value === "pending");
 
-const selected = ref<Room[]>([]);
+const selected = ref<TableRoom[]>([]);
 const columns = [
   { key: "code", label: "Código" },
-  { key: "tenants.name", label: "Inquilino" },
+  { key: "tenant.name", label: "Inquilino" },
   { key: "rent", label: "Alquiler" },
   { key: "electricityTypeRegister", label: "Tipo de registro de electricidad" },
   { key: "electricityRegister", label: "Registro de luz" },

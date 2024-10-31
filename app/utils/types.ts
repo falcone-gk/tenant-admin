@@ -33,6 +33,9 @@ export type FormRoom = z.infer<typeof roomSchema>;
 export interface Room extends FormRoom {
   id: number;
 }
+export interface TableRoom extends Room {
+  tenant: { name: string };
+}
 
 export interface RoomOption {
   id: number;
@@ -45,9 +48,7 @@ export type FormDebt = Omit<InsertDebt, "tenantId" | "roomId"> & {
   tenantId: number | null;
   roomId: number | null;
 };
-// export interface Debt extends InsertDebt {
-//   id: number;
-// }
 export interface TableDebt extends InsertDebt {
-  isEdit: boolean;
+  tenant: { name: string };
+  room: { code: string };
 }

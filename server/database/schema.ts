@@ -42,6 +42,7 @@ export const tenant = pgTable("tenants", {
 
 export const tenantRelations = relations(tenant, ({ many }) => ({
   rooms: many(room),
+  debts: many(debt),
 }));
 
 // const insertUserSchema = createInsertSchema(tenant);
@@ -62,7 +63,7 @@ export const room = pgTable("rooms", {
 });
 
 export const roomRelations = relations(room, ({ one }) => ({
-  tenants: one(tenant, {
+  tenant: one(tenant, {
     fields: [room.tenantId],
     references: [tenant.id],
   }),
@@ -97,6 +98,17 @@ export const debt = pgTable("debts", {
   totalPaid: decimal("total_paid", { scale: 2 }).notNull().default("0"),
   isPaid: boolean("is_paid").notNull().default(false),
 });
+
+export const debtRelations = relations(debt, ({ one }) => ({
+  tenant: one(tenant, {
+    fields: [debt.tenantId],
+    references: [tenant.id],
+  }),
+  room: one(room, {
+    fields: [debt.roomId],
+    references: [room.id],
+  }),
+}));
 
 export const payment = pgTable("payments", {
   id: serial("id").primaryKey(),
