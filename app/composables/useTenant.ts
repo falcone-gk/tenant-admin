@@ -29,6 +29,7 @@ export function useTenant() {
   }
 
   return {
+    key,
     getTenants,
     getTenantOptions,
   };

@@ -30,6 +30,7 @@ export function useRoom() {
   }
 
   return {
+    key,
     getRooms,
     getRoomOptions,
   };
