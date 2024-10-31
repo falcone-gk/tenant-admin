@@ -1,45 +1,27 @@
 <script lang="ts" setup>
-const rowInitialState: TableDebt = {
-  code: "",
-  tenantId: 0,
-  roomId: 0,
-  date: new Date().getTime(),
-  isExtraDebt: false,
-  rentCost: 0,
-  prevElectricityRegister: 0,
-  currentElectricityRegister: 0,
-  electricityCost: 0,
-  prevWaterRegister: 0,
-  currentWaterRegister: 0,
-  waterCost: 0,
-  tvCost: 0,
-  internetCost: 0,
-  amount: 0,
-  totalPaid: 0,
-  isPaid: false,
-  isEdit: true,
-};
-
-const rows = ref<TableDebt[]>([]);
+const { data: debts, status } = await useAPI<TableDebt[]>("/api/debts", { lazy: true });
+const loading = computed(() => status.value === "pending");
 
 const selected = ref<TableDebt[]>([]);
 const columns = [
   { key: "actions", label: "Acciones" },
   { key: "code", label: "Código" },
-  { key: "tenantId", label: "ID del inquilino" },
-  { key: "roomId", label: "ID de la habitación" },
+  { key: "tenant.name", label: "ID del inquilino" },
+  { key: "room.code", label: "ID de la habitación" },
   { key: "date", label: "Fecha" },
   { key: "isExtraDebt", label: "¿Es deuda adicional?" },
   { key: "rentCost", label: "Costo de renta" },
   { key: "prevElectricityRegister", label: "Registro anterior de electricidad" },
   { key: "currentElectricityRegister", label: "Registro actual de electricidad" },
+  { key: "monthElectricityConsume", label: "Consumo del mes de luz" },
   { key: "electricityCost", label: "Costo de electricidad" },
   { key: "prevWaterRegister", label: "Registro anterior de agua" },
   { key: "currentWaterRegister", label: "Registro actual de agua" },
+  { key: "monthWaterConsume", label: "Consumo del mes del agua" },
   { key: "waterCost", label: "Costo de agua" },
   { key: "tvCost", label: "TV" },
   { key: "internetCost", label: "Internet" },
-  { key: "amount", label: "Total Costo" },
+  { key: "amount", label: "Costo total" },
   { key: "totalPaid", label: "Total pagado" },
   { key: "isPaid", label: "¿Está pagado?" },
 ];
@@ -55,7 +37,8 @@ const columns = [
     <UTable
       v-model="selected"
       class="border-y-2"
-      :rows="rows"
+      :loading="loading"
+      :rows="debts"
       :columns="columns"
       :ui="{
         wrapper: 'md:max-w-[calc(100vw-var(--sidebar-width))]',
@@ -80,12 +63,45 @@ const columns = [
       <template #date-data="{ row }">
         {{ new Date(row.date).toLocaleDateString() }}
       </template>
+
+      <template #prevElectricityRegister-data="{ row }">
+        {{ `${row.prevElectricityRegister} kw` }}
+      </template>
       <template #currentElectricityRegister-data="{ row }">
         {{ `${row.currentElectricityRegister} kw` }}
       </template>
+      <template #monthElectricityConsume-data="{ row }">
+        {{ `${row.monthElectricityConsume} kw` }}
+      </template>
+      <template #waterCost-data="{ row }">
+        {{ `S/ ${row.waterCost}` }}
+      </template>
 
+      <template #prevWaterRegister-data="{ row }">
+        {{ `${row.prevWaterRegister} m3` }}
+      </template>
       <template #currentWaterRegister-data="{ row }">
         {{ `${row.currentWaterRegister} m3` }}
+      </template>
+      <template #monthWaterConsume-data="{ row }">
+        {{ `${row.monthWaterConsume} m3` }}
+      </template>
+      <template #electricityCost-data="{ row }">
+        {{ `S/ ${row.electricityCost}` }}
+      </template>
+
+      <template #internetCost-data="{ row }">
+        {{ `S/ ${row.internetCost}` }}
+      </template>
+      <template #tvCost-data="{ row }">
+        {{ `S/ ${row.tvCost}` }}
+      </template>
+
+      <template #amount-data="{ row }">
+        {{ `S/ ${row.amount}` }}
+      </template>
+      <template #totalPaid-data="{ row }">
+        {{ `S/ ${row.totalPaid}` }}
       </template>
     </UTable>
   </div>
