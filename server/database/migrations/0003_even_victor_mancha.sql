@@ -1,1 +1,0 @@
-ALTER TABLE "rooms" RENAME COLUMN "elictricityTypeRegister" TO "electricityTypeRegister";

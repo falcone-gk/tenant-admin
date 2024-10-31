@@ -3,16 +3,18 @@ CREATE TYPE "public"."unit_enum" AS ENUM('m3', 'kw');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "debts" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"code" varchar(255) NOT NULL,
-	"tenant_id" integer,
+	"tenant_id" integer NOT NULL,
 	"room_id" integer,
-	"date" integer NOT NULL,
+	"date" date NOT NULL,
 	"is_service" boolean DEFAULT false NOT NULL,
 	"rent_cost" integer DEFAULT 0 NOT NULL,
 	"prev_electricity_register" integer DEFAULT 0 NOT NULL,
 	"current_electricity_register" integer DEFAULT 0 NOT NULL,
+	"month_electricity_consume" integer DEFAULT 0 NOT NULL,
 	"electricity_cost" numeric DEFAULT '0' NOT NULL,
 	"prev_water_register" integer,
 	"current_water_register" integer,
+	"month_water_consume" integer DEFAULT 0 NOT NULL,
 	"water_cost" numeric DEFAULT '0' NOT NULL,
 	"tv_cost" integer DEFAULT 0 NOT NULL,
 	"internet_cost" integer DEFAULT 0 NOT NULL,
@@ -36,7 +38,7 @@ CREATE TABLE IF NOT EXISTS "rooms" (
 	"code" varchar(20) NOT NULL,
 	"tenant_id" integer,
 	"rent" integer NOT NULL,
-	"elictricityTypeRegister" "register_enum",
+	"electricityTypeRegister" "register_enum",
 	"electricity_register" integer NOT NULL,
 	"waterTypeRegister" "register_enum",
 	"water_register" integer NOT NULL,
@@ -58,7 +60,17 @@ CREATE TABLE IF NOT EXISTS "tenants" (
 	"id" "smallserial" PRIMARY KEY NOT NULL,
 	"name" varchar(50) NOT NULL,
 	"payment_day" smallint NOT NULL,
-	"is_deleted" boolean DEFAULT false NOT NULL
+	"debt_prefix" varchar(2),
+	"debt_counter" integer DEFAULT 0 NOT NULL,
+	"is_deleted" boolean DEFAULT false NOT NULL,
+	CONSTRAINT "tenants_debt_prefix_unique" UNIQUE("debt_prefix")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "users" (
+	"id" "smallserial" PRIMARY KEY NOT NULL,
+	"username" varchar(255) NOT NULL,
+	"password" varchar(255) NOT NULL,
+	"is_admin" boolean DEFAULT true NOT NULL
 );
 --> statement-breakpoint
 DO $$ BEGIN

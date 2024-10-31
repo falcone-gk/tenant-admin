@@ -8,7 +8,7 @@ const secretKey = config.basicAuth.secretKey;
 
 // Hash the password
 export async function hashPassword(password: string): Promise<string> {
-  return await bcrypt.hash(password, saltRounds);
+  return await bcrypt.hash(password, Number(saltRounds));
 }
 
 // Verify the password

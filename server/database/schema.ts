@@ -44,6 +44,8 @@ export const tenantRelations = relations(tenant, ({ many }) => ({
   rooms: many(room),
 }));
 
+// const insertUserSchema = createInsertSchema(tenant);
+
 export const room = pgTable("rooms", {
   id: smallserial("id").primaryKey(),
   code: varchar("code", { length: 20 }).notNull().unique(),
@@ -76,16 +78,18 @@ export const service = pgTable("services", {
 export const debt = pgTable("debts", {
   id: serial("id").primaryKey(),
   code: varchar("code", { length: 255 }).notNull().unique(),
-  tenantId: integer("tenant_id").references(() => tenant.id),
+  tenantId: integer("tenant_id").references(() => tenant.id).notNull(),
   roomId: integer("room_id").references(() => room.id),
-  date: integer("date").notNull(),
+  date: date("date", { mode: "string" }).notNull(),
   isExtraDebt: boolean("is_service").notNull().default(false),
   rentCost: integer("rent_cost").notNull().default(0),
   prevElectricityRegister: integer("prev_electricity_register").notNull().default(0),
   currentElectricityRegister: integer("current_electricity_register").notNull().default(0),
+  monthElectricityConsume: integer("month_electricity_consume").notNull().default(0),
   electricityCost: decimal("electricity_cost", { scale: 2 }).notNull().default("0"),
   prevWaterRegister: integer("prev_water_register"),
   currentWaterRegister: integer("current_water_register"),
+  monthWaterConsume: integer("month_water_consume").notNull().default(0),
   waterCost: decimal("water_cost", { scale: 2 }).notNull().default("0"),
   tvCost: integer("tv_cost").notNull().default(0),
   internetCost: integer("internet_cost").notNull().default(0),
@@ -97,7 +101,7 @@ export const debt = pgTable("debts", {
 export const payment = pgTable("payments", {
   id: serial("id").primaryKey(),
   tenantId: integer("tenant_id").references(() => tenant.id),
-  date: date("date").notNull(),
+  date: date("date", { mode: "string" }).notNull(),
   debtId: integer("debt_id").references(() => debt.id),
   amount: decimal("amount", { scale: 2 }).notNull(),
   isPaid: boolean("is_paid").notNull().default(false),

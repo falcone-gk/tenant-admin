@@ -14,6 +14,7 @@ export default withNuxt(
           multiline: { max: 1 },
         },
       ],
+      // "@stylistic/max-len": ["error", { code: 80 }],
     },
   },
 );

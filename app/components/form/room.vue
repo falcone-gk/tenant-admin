@@ -8,7 +8,7 @@ const props = defineProps({
 
 const emit = defineEmits(["sendForm"]);
 const { getTenantOptions } = useTenant();
-const { data: tenantOptions } = await getTenantOptions();
+const tenantOptions = await getTenantOptions();
 const registerOptions = ["fixed", "variable"] as const;
 const state = defineModel<Room | FormRoom>("form", { required: true });
 </script>

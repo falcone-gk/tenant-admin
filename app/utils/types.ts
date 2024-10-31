@@ -24,13 +24,30 @@ export interface TableTenant extends Tenant {
     code: string;
   }[];
 }
+export interface TenantOption {
+  id: number;
+  name: string;
+}
 
 export type FormRoom = z.infer<typeof roomSchema>;
 export interface Room extends FormRoom {
   id: number;
 }
 
-export type FormDebt = z.infer<typeof debtSchema>;
-export interface Debt extends FormDebt {
+export interface RoomOption {
   id: number;
+  code: string;
+  tenantId: number;
+}
+
+export type InsertDebt = z.infer<typeof insertDebtSchema>;
+export type FormDebt = Omit<InsertDebt, "tenantId" | "roomId"> & {
+  tenantId: number | null;
+  roomId: number | null;
+};
+// export interface Debt extends InsertDebt {
+//   id: number;
+// }
+export interface TableDebt extends InsertDebt {
+  isEdit: boolean;
 }
