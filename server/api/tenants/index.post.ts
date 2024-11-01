@@ -6,6 +6,7 @@ export default defineAdminResponseHandler(async (event) => {
   const body = event.context.body as FormTenant;
   const [newTenant] = await db.insert(tables.tenant).values(body).returning();
 
+  setResponseStatus(event, 201);
   return {
     status: "success",
     message: "Tenant created successfully",

@@ -25,6 +25,7 @@ export default defineAdminResponseHandler(async (event) => {
     .where(eq(tables.tenant.id, params.data.id))
     .returning();
 
+  setResponseStatus(event, 201);
   return {
     status: "success",
     message: "Tenant updated successfully",

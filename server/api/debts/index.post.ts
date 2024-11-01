@@ -21,6 +21,7 @@ export default defineAdminResponseHandler(async (event) => {
     return debt;
   });
 
+  setResponseStatus(event, 201);
   return {
     status: "success",
     message: "Debt created successfully",
