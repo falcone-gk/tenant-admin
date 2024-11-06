@@ -17,14 +17,15 @@ export async function verifyPassword(plainPassword: string, hashedPassword: stri
 }
 
 export const createUserSession = async (event: H3Event, data: UserSession) => {
+  const maxAge = data.isAdmin ? 60 * 60 * 24 : 60 * 15;
   const session = await useSession<UserSession>(event, {
     name: "user",
     password: secretKey,
     cookie: {
       httpOnly: true,
       sameSite: "strict",
-      maxAge: 60 * 60 * 24, // One day,
     },
+    maxAge: maxAge,
   });
 
   await session.update(data);
@@ -40,6 +41,8 @@ export const getUserSession = async (event: H3Event) => {
     },
   });
   if (Object.keys(session.data).length === 0) {
+    // We clear because a session is always created
+    await session.clear();
     return null;
   }
   return session;
