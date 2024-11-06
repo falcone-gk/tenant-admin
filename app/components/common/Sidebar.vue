@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const publicLinks = [
-  { label: "Home", icon: "i-heroicons-home-solid", to: "/admin", exact: true },
+  // { label: "Home", icon: "i-heroicons-home-solid", to: "/admin", exact: true },
   { label: "Inquilinos", icon: "i-heroicons-user-group-solid", to: "/admin/tenants" },
   { label: "Cuartos", icon: "i-heroicons-building-office-solid", to: "/admin/rooms" },
   { label: "Deudas", icon: "i-heroicons-currency-dollar-solid", to: "/admin/debts" },
