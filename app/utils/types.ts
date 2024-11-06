@@ -13,9 +13,9 @@ export interface UserSession {
   isAdmin: boolean;
 }
 
-export type LoginSchemaType = z.infer<typeof loginSchema>;
+export type LoginSchemaType = z.input<typeof loginSchema>;
 
-export type FormTenant = z.infer<typeof tenantSchema>;
+export type FormTenant = z.input<typeof tenantSchema>;
 export interface Tenant extends FormTenant {
   id: number;
 }
