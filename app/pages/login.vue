@@ -12,7 +12,9 @@ const state = ref<LoginSchemaType>({
 
 const form = useTemplateRef<Form<LoginSchemaType>>("login-form");
 const { login, isLoggedIn, pendingAuth } = useAuth();
+const isLoginBtnClicked = ref(false);
 const onSubmit = async () => {
+  isLoginBtnClicked.value = true;
   await login(state.value);
   if (!isLoggedIn.value) {
     form.value?.setErrors([
@@ -25,15 +27,18 @@ const onSubmit = async () => {
   else {
     navigateTo("/admin");
   }
+  isLoginBtnClicked.value = false;
 };
 
+const isGuestBtnClicked = ref(false);
 const guestData = {
   username: "guest",
   password: "guest",
 };
-
 async function onSubmitGuest() {
+  isGuestBtnClicked.value = true;
   await login(guestData);
+  isGuestBtnClicked.value = false;
   navigateTo("/admin");
 }
 </script>
@@ -60,7 +65,7 @@ async function onSubmitGuest() {
           <UButton
             type="submit"
             label="Login"
-            :loading="pendingAuth"
+            :loading="pendingAuth && isLoginBtnClicked"
             block
           />
         </div>
@@ -71,7 +76,7 @@ async function onSubmitGuest() {
           variant="outline"
           color="teal"
           block
-          :loading="pendingAuth"
+          :loading="pendingAuth && isGuestBtnClicked"
           @click="onSubmitGuest"
         />
       </div>
