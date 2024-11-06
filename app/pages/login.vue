@@ -5,15 +5,15 @@ definePageMeta({
   layout: "centered",
 });
 
-const state = reactive<LoginSchemaType>({
+const state = ref<LoginSchemaType>({
   username: "",
   password: "",
 });
 
 const form = useTemplateRef<Form<LoginSchemaType>>("login-form");
-const { login, isLoggedIn } = useAuth();
+const { login, isLoggedIn, pendingAuth } = useAuth();
 const onSubmit = async () => {
-  await login(state);
+  await login(state.value);
   if (!isLoggedIn.value) {
     form.value?.setErrors([
       {
@@ -26,6 +26,16 @@ const onSubmit = async () => {
     navigateTo("/admin");
   }
 };
+
+const guestData = {
+  username: "guest",
+  password: "guest",
+};
+
+async function onSubmitGuest() {
+  await login(guestData);
+  navigateTo("/admin");
+}
 </script>
 
 <template>
@@ -38,18 +48,33 @@ const onSubmit = async () => {
         :state="state"
         @submit="onSubmit"
       >
-        <UFormGroup label="Username" name="username">
+        <UFormGroup label="Nombre de usuario" name="username">
           <UInput v-model="state.username" />
         </UFormGroup>
 
-        <UFormGroup label="Password" name="password">
+        <UFormGroup label="Contraseña" name="password">
           <UInput v-model="state.password" type="password" />
         </UFormGroup>
 
         <div>
-          <UButton type="submit" label="Login" />
+          <UButton
+            type="submit"
+            label="Login"
+            :loading="pendingAuth"
+            block
+          />
         </div>
       </UForm>
+      <div class="mt-4">
+        <UButton
+          label="Ingresar como invitado"
+          variant="outline"
+          color="teal"
+          block
+          :loading="pendingAuth"
+          @click="onSubmitGuest"
+        />
+      </div>
     </UCard>
   </div>
 </template>
