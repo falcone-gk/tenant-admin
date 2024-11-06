@@ -129,13 +129,6 @@ watch(
   },
 );
 
-watch(
-  () => state.value.date,
-  (value) => {
-    console.log(state.value.date);
-  },
-);
-
 function onChangeTenant(value: string) {
   state.value.tenantId = Number(value);
   state.value.roomId = null;
