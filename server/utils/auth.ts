@@ -23,7 +23,7 @@ export const createUserSession = async (event: H3Event, data: UserSession) => {
     password: secretKey,
     cookie: {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
     },
     maxAge: maxAge,
   });
@@ -37,7 +37,7 @@ export const getUserSession = async (event: H3Event) => {
     name: "user",
     password: secretKey,
     cookie: {
-      sameSite: "strict",
+      sameSite: "none",
     },
   });
   if (Object.keys(session.data).length === 0) {
