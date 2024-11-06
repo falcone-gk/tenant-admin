@@ -31,7 +31,7 @@ const initialValues: FormDebt = {
 
 const state = ref<FormDebt>({ ...initialValues });
 
-const { data, status, execute: createDebt } = await useAPI("/api/debts", {
+const { data, status, error, execute: createDebt } = await useAPI("/api/debts", {
   immediate: false,
   watch: false,
   method: "POST",
@@ -87,7 +87,7 @@ const onCreateDebt = async () => {
   if (!data.value) {
     showNotification({
       type: "error",
-      message: "Error creating debt",
+      message: error.value ? error.value.data.message : "Error creating debt",
     });
   }
   else {

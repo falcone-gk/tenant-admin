@@ -7,12 +7,13 @@ export const useAuth = () => {
     password: "",
   };
   const body = ref(initialStateBody);
-  const { data: session, execute: signin } = useFetch("/api/auth/login", {
+  const { data: session, status, execute: signin } = useFetch("/api/auth/login", {
     immediate: false,
     watch: false,
     method: "POST",
     body: body,
   });
+  const pendingAuth = computed(() => status.value === "pending");
 
   const { execute: onLogout } = useFetch("/api/auth/logout", {
     immediate: false,
@@ -50,6 +51,7 @@ export const useAuth = () => {
     isLoggedIn,
     login,
     logout,
+    pendingAuth,
     setSession,
     deleteSession,
   };

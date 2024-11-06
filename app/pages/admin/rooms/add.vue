@@ -14,7 +14,7 @@ const initialValues: FormRoom = {
 };
 const state = ref<FormRoom>({ ...initialValues });
 
-const { data, status, execute: createRoom } = await useAPI("/api/rooms", {
+const { data, status, error, execute: createRoom } = await useAPI("/api/rooms", {
   immediate: false,
   watch: false,
   method: "POST",
@@ -28,7 +28,7 @@ const onCreateRoom = async () => {
   if (!data.value) {
     showNotification({
       type: "error",
-      message: "Error creating room",
+      message: error.value ? error.value.data.message : "Error creating room",
     });
   }
   else {

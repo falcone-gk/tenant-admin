@@ -3,11 +3,10 @@ const initialValues = {
   name: "",
   paymentDay: 1,
   debtPrefix: "",
-  isDeleted: false,
 };
 const state = ref<FormTenant>({ ...initialValues });
 
-const { data, status, execute: createTenant } = await useAPI("/api/tenants", {
+const { data, status, error, execute: createTenant } = await useAPI("/api/tenants", {
   immediate: false,
   watch: false,
   method: "POST",
@@ -21,7 +20,7 @@ const onCreateTenant = async () => {
   if (!data.value) {
     showNotification({
       type: "error",
-      message: "Error creating tenant",
+      message: error.value ? error.value.data.message : "Error creating tenant",
     });
   }
   else {

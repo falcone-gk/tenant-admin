@@ -9,7 +9,7 @@ await useAPI<Room>(`/api/rooms/${id}`, {
   },
 });
 
-const { data, status, execute: updateRoom } = await useAPI(`/api/rooms/${id}`, {
+const { data, status, error, execute: updateRoom } = await useAPI(`/api/rooms/${id}`, {
   immediate: false,
   watch: false,
   method: "PUT",
@@ -23,7 +23,7 @@ const onUpdateRoom = async () => {
   if (!data.value) {
     showNotification({
       type: "error",
-      message: "Error updating tenant",
+      message: error.value ? error.value.data.message : "Error updating tenant",
     });
   }
   else {

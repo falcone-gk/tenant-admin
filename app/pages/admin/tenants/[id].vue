@@ -9,7 +9,7 @@ await useAPI<Tenant>(`/api/tenants/${id}`, {
   },
 });
 
-const { data, status, execute: updateTenant } = await useAPI(`/api/tenants/${id}`, {
+const { data, status, error, execute: updateTenant } = await useAPI(`/api/tenants/${id}`, {
   immediate: false,
   watch: false,
   method: "PUT",
@@ -23,7 +23,7 @@ const onUpdateTenant = async () => {
   if (!data.value) {
     showNotification({
       type: "error",
-      message: "Error updating tenant",
+      message: error.value ? error.value.data.message : "Error updating tenant",
     });
   }
   else {
