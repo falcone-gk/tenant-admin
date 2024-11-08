@@ -7,6 +7,12 @@ declare module "#app" {
   }
 }
 
+declare module "h3" {
+  interface H3EventContext {
+    user: UserSession;
+  }
+}
+
 export interface UserSession {
   id: number;
   username: string;

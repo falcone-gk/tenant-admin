@@ -6,7 +6,8 @@ export const defineAuthenticatedResponseHandler = <T extends EventHandlerRequest
 ): EventHandler<T, D> =>
   defineEventHandler<T>(async (event) => {
     try {
-      await requireUserSession(event);
+      const session = await requireUserSession(event);
+      event.context.user = session.data;
       // do something after the route handler
       return await handler(event);
     }
@@ -22,7 +23,8 @@ export const defineAdminResponseHandler = <T extends EventHandlerRequest, D, E> 
 ): EventHandler<T, D> =>
   defineEventHandler<T>(async (event) => {
     try {
-      await requireAdminSession(event);
+      const session = await requireAdminSession(event);
+      event.context.user = session.data;
       if (!schema) {
         const response = await handler(event);
         // do something after the route handler

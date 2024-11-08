@@ -56,6 +56,7 @@ export const requireUserSession = async (event: H3Event) => {
       statusMessage: "Invalid credentials",
     });
   }
+  return session;
 };
 
 export const requireAdminSession = async (event: H3Event) => {
@@ -72,6 +73,7 @@ export const requireAdminSession = async (event: H3Event) => {
       statusMessage: "Unauthorized",
     });
   }
+  return session;
 };
 
 export const deleteUserSession = async (event: H3Event) => {
