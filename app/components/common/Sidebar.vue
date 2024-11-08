@@ -9,7 +9,7 @@ const publicLinks = [
 
 const links = [publicLinks];
 
-const { logout } = useAuth();
+const { userSession, logout } = useAuth();
 const onLogout = async () => {
   await logout();
   navigateTo("/login");
@@ -25,6 +25,12 @@ const onLogout = async () => {
       footer: { base: 'mt-auto' },
     }"
   >
+    <template #header>
+      <Typography tag="h1" variant="h3">
+        {{ userSession?.username }}
+      </Typography>
+    </template>
+
     <UVerticalNavigation
       class="min-w-[250px]"
       :links="links"

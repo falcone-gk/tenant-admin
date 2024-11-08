@@ -2,7 +2,16 @@
 const route = useRoute();
 const id = route.params.id;
 
-const state = ref<Tenant>();
+const { getTenant } = useTenant();
+const tenant = await getTenant(Number(id));
+if (!tenant) {
+  showError({
+    status: 400,
+    statusMessage: "Tenant not found",
+  });
+}
+
+const state = ref<Tenant>({ ...tenant! });
 await useAPI<Tenant>(`/api/tenants/${id}`, {
   onResponse: ({ response }) => {
     state.value = response._data as Tenant;

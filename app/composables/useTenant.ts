@@ -5,9 +5,7 @@ export function useTenant() {
   const nuxtApp = useNuxtApp();
   const key = "tenants";
 
-  function getTenants<T = Tenant[]>(
-    options?: UseFetchOptions<T>,
-  ) {
+  function getTenants<T = Tenant[]>(options?: UseFetchOptions<T>) {
     return useAPI(url, {
       ...options,
       key: key,
@@ -28,9 +26,16 @@ export function useTenant() {
     });
   }
 
+  async function getTenant(id: number) {
+    const { data: tenants } = await getTenants();
+    if (!tenants.value) return null;
+    return tenants.value.find(tenant => tenant.id === id);
+  }
+
   return {
     key,
     getTenants,
+    getTenant,
     getTenantOptions,
   };
 }
