@@ -5,6 +5,7 @@ const props = defineProps({
     required: true,
   },
 });
+const { user } = useAuth();
 const emit = defineEmits(["sendForm"]);
 const state = defineModel<Tenant | FormTenant>("form", { required: true });
 </script>
@@ -18,6 +19,9 @@ const state = defineModel<Tenant | FormTenant>("form", { required: true });
   >
     <UFormGroup label="Nombre" name="name">
       <UInput v-model="state.name" placeholder="Enter name" />
+    </UFormGroup>
+    <UFormGroup v-if="user?.isAdmin" label="Nombre" name="alias">
+      <UInput v-model="state.alias" placeholder="Enter alias" />
     </UFormGroup>
     <UFormGroup label="Día de pago" name="paymentDay">
       <UInput

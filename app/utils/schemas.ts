@@ -7,6 +7,7 @@ export const loginSchema = z.object({
 
 export const tenantSchema = z.object({
   name: z.string().min(1).max(50),
+  alias: z.string().min(1).max(50),
   paymentDay: z.number().min(1).max(31),
   debtPrefix: z.string().min(1).max(2),
   debtCounter: z.number().min(0).max(10).default(0),
