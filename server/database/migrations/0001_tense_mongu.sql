@@ -1,0 +1,1 @@
+ALTER TABLE "tenants" ADD COLUMN "alias" varchar(50) DEFAULT '' NOT NULL;

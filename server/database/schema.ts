@@ -25,7 +25,7 @@ export const user = pgTable("users", {
 export const tenant = pgTable("tenants", {
   id: smallserial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
-  alias: varchar("name", { length: 50 }).notNull().default(""),
+  alias: varchar("alias", { length: 50 }).notNull().default(""),
   // This initial debt is bercause some tenants already have debts
   // initalDebt: integer("initial_debt").notNull().default(0),
   // This field is to track the current debt of the tenant
