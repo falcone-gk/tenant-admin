@@ -9,7 +9,7 @@ const publicLinks = [
 
 const links = [publicLinks];
 
-const { userSession, logout } = useAuth();
+const { user, logout } = useAuth();
 const onLogout = async () => {
   await logout();
   navigateTo("/login");
@@ -27,7 +27,7 @@ const onLogout = async () => {
   >
     <template #header>
       <Typography tag="h1" variant="h3">
-        {{ userSession?.username }}
+        {{ user?.username }}
       </Typography>
     </template>
 

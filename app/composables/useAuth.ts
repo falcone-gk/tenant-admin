@@ -1,6 +1,6 @@
 export const useAuth = () => {
-  const userSession = useState<UserSession | null>("userSession", () => null);
-  const isLoggedIn = ref(Boolean(userSession.value));
+  const user = useState<UserSession | null>("user", () => null);
+  const isLoggedIn = ref(Boolean(user.value));
 
   const initialStateBody = {
     username: "",
@@ -22,12 +22,12 @@ export const useAuth = () => {
   });
 
   function setSession(session: UserSession) {
-    userSession.value = session;
+    user.value = session;
     isLoggedIn.value = true;
   }
 
   function deleteSession() {
-    userSession.value = null;
+    user.value = null;
     isLoggedIn.value = false;
   }
 
@@ -47,7 +47,7 @@ export const useAuth = () => {
   }
 
   return {
-    userSession,
+    user,
     isLoggedIn,
     login,
     logout,
