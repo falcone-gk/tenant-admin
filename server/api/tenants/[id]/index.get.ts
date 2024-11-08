@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
 export default defineAuthenticatedResponseHandler(async (event) => {
@@ -16,8 +16,14 @@ export default defineAuthenticatedResponseHandler(async (event) => {
     });
   }
 
+  const user = event.context.user;
+  const fieldName = user.isAdmin ? tables.tenant.name : tables.tenant.alias;
+
   const db = useDrizzle();
   const tenant = await db.query.tenant.findFirst({
+    extras: {
+      name: sql`${fieldName}`.as("name"),
+    },
     where: eq(tables.tenant.id, params.data.id),
   });
 
