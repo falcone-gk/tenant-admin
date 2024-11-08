@@ -25,6 +25,7 @@ export const user = pgTable("users", {
 export const tenant = pgTable("tenants", {
   id: smallserial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
+  alias: varchar("name", { length: 50 }).notNull().default(""),
   // This initial debt is bercause some tenants already have debts
   // initalDebt: integer("initial_debt").notNull().default(0),
   // This field is to track the current debt of the tenant
@@ -79,15 +80,25 @@ export const service = pgTable("services", {
 export const debt = pgTable("debts", {
   id: serial("id").primaryKey(),
   code: varchar("code", { length: 255 }).notNull().unique(),
-  tenantId: integer("tenant_id").references(() => tenant.id).notNull(),
+  tenantId: integer("tenant_id")
+    .references(() => tenant.id)
+    .notNull(),
   roomId: integer("room_id").references(() => room.id),
   date: date("date", { mode: "string" }).notNull(),
   isExtraDebt: boolean("is_service").notNull().default(false),
   rentCost: integer("rent_cost").notNull().default(0),
-  prevElectricityRegister: integer("prev_electricity_register").notNull().default(0),
-  currentElectricityRegister: integer("current_electricity_register").notNull().default(0),
-  monthElectricityConsume: integer("month_electricity_consume").notNull().default(0),
-  electricityCost: decimal("electricity_cost", { scale: 2 }).notNull().default("0"),
+  prevElectricityRegister: integer("prev_electricity_register")
+    .notNull()
+    .default(0),
+  currentElectricityRegister: integer("current_electricity_register")
+    .notNull()
+    .default(0),
+  monthElectricityConsume: integer("month_electricity_consume")
+    .notNull()
+    .default(0),
+  electricityCost: decimal("electricity_cost", { scale: 2 })
+    .notNull()
+    .default("0"),
   prevWaterRegister: integer("prev_water_register"),
   currentWaterRegister: integer("current_water_register"),
   monthWaterConsume: integer("month_water_consume").notNull().default(0),
